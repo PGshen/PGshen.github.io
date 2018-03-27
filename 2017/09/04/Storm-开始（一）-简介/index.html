@@ -1,0 +1,859 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="storm,大数据," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Storm简介标签（空格分隔）： Storm 实时流处理
+
+1. 什么是Storm
+Storm是一个分布式计算框架，主要使用Clojure与Java语言编写，最初由Nathan Marz带领BackType公司的团队创建，在Backtype公司被Twitter公司收购够进行开源；
+Storm能轻松可靠的处理无界的数据流，就像Hadoop对数据进行批处理；
+Storm能用到很多处理场景中，包括实时分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Storm-开始（一）-简介">
+<meta property="og:url" content="http://non-zero.space/2017/09/04/Storm-开始（一）-简介/index.html">
+<meta property="og:site_name" content="Non-zero">
+<meta property="og:description" content="Storm简介标签（空格分隔）： Storm 实时流处理
+
+1. 什么是Storm
+Storm是一个分布式计算框架，主要使用Clojure与Java语言编写，最初由Nathan Marz带领BackType公司的团队创建，在Backtype公司被Twitter公司收购够进行开源；
+Storm能轻松可靠的处理无界的数据流，就像Hadoop对数据进行批处理；
+Storm能用到很多处理场景中，包括实时分">
+<meta property="og:updated_time" content="2018-03-27T02:21:49.865Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Storm-开始（一）-简介">
+<meta name="twitter:description" content="Storm简介标签（空格分隔）： Storm 实时流处理
+
+1. 什么是Storm
+Storm是一个分布式计算框架，主要使用Clojure与Java语言编写，最初由Nathan Marz带领BackType公司的团队创建，在Backtype公司被Twitter公司收购够进行开源；
+Storm能轻松可靠的处理无界的数据流，就像Hadoop对数据进行批处理；
+Storm能用到很多处理场景中，包括实时分">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://non-zero.space/2017/09/04/Storm-开始（一）-简介/"/>
+
+  <title> Storm-开始（一）-简介 | Non-zero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Non-zero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Non-zero space</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Storm-开始（一）-简介
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-04T13:37:39+08:00" content="2017-09-04">
+              2017-09-04
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/storm/" itemprop="url" rel="index">
+                    <span itemprop="name">storm</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/04/Storm-开始（一）-简介/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/04/Storm-开始（一）-简介/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/04/Storm-开始（一）-简介/" class="leancloud_visitors" data-flag-title="Storm-开始（一）-简介">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Storm简介"><a href="#Storm简介" class="headerlink" title="Storm简介"></a>Storm简介</h1><p>标签（空格分隔）： Storm 实时流处理</p>
+<hr>
+<h2 id="1-什么是Storm"><a href="#1-什么是Storm" class="headerlink" title="1. 什么是Storm"></a>1. 什么是Storm</h2><ol>
+<li><strong>Storm</strong>是一个分布式计算框架，主要使用<code>Clojure</code>与<code>Java</code>语言编写，最初由<em>Nathan Marz</em>带领BackType公司的团队创建，在Backtype公司被Twitter公司收购够进行开源；</li>
+<li><strong>Storm</strong>能轻松可靠的处理无界的数据流，就像Hadoop对数据进行批处理；</li>
+<li><strong>Storm</strong>能用到很多处理场景中，包括实时分析、在线机器学习、连续计算、分布式RPC、ETL等；</li>
+<li><strong>Storm</strong> 的处理速度非常快，每个节点每秒中可以处理100万条消息。同时，Storm是可伸缩的、容错的，并且能保证数据根据用户设定被妥善处理，便于进行设置和操作。</li>
+<li><strong>Storm</strong> 集成了许多消息队列和数据库技术。Storm的Topology消耗数据流，以任意复杂的方式处理这些流，并且在每个需要计算的阶段以这些流进行重新划分。</li>
+</ol>
+<a id="more"></a>
+<h2 id="2-Storm核心技术和基本组成"><a href="#2-Storm核心技术和基本组成" class="headerlink" title="2. Storm核心技术和基本组成"></a>2. Storm核心技术和基本组成</h2><ol>
+<li><strong>Topology</strong><br>一个拓扑是一个图的计算。用户在一个拓扑的每个节点包含处理逻辑，节点之间的链接显示数据应该如何在节点之间传递。</li>
+<li><strong>Stream</strong><br>流式<strong>Storm</strong> 的核心抽象。一个流式一个无界的Tuple序列，Tuple可以包含整型、长整型、短整型、字节、字符、双精度数、浮点数、布尔值和字节数组。用户可以定义序列化器在本机Tuple使用自定义类型。</li>
+<li><strong>Spout</strong><br>Spout是Topology流的来源，一般Spout以外部来源读取Tuple，提交到Topology。Spout可以发出超过一个流。</li>
+<li><strong>Bolt</strong><br>Topology中的所有处理都在Bolt中完成。Bolt可以完成过滤、业务处理、链接运算、连接、访问数据库等业务。可以完成流的转换，发出超过一个流，主要方法是execute方法。Bolt可以启动新线程做异步处理。</li>
+<li><strong>Stream grouping</strong><br>流分组用于在Bolt的任务中定义流应该如何分区。有8个内置的流分组接口：随机（shuffle）、字段（Fields）、部分关键字（Partial key）、全部（All）、全局（Global）、无分组（None）、直接（Direct）、本地或随机（Local or shuffle）分组</li>
+<li><strong>Task</strong><br>每个Spout或Bolt在集群执行许多任务。每个任务对应一个线程执行，流分组定义如何从一个任务集到另一个任务集发送Tuple。通过TopologyBuilder类的setSpout()和setBolt()方法设置每个Spout或Bolt的并行度。</li>
+<li><strong>Worker</strong><br>Topology跨一个或多个worker节点的进程执行。每个worker节点的进程是一个物理的jvm和Topology执行所有任务的一个子集。</li>
+</ol>
+<h2 id="3-Storm的特点"><a href="#3-Storm的特点" class="headerlink" title="3. Storm的特点"></a>3. Storm的特点</h2><ol>
+<li>集成多种技术<ul>
+<li>Storm集成了一些消息队列系统，如<code>Kestrel</code>、<code>RabbitMQ</code>、<code>Kafka</code>、<code>JMS</code>等；</li>
+<li>Storm也可以很容易的数据库系统集成，Storm会自动完成并行化、分区、失败重连等操作。</li>
+</ul>
+</li>
+<li>简单的API<ul>
+<li>当使用Storm编程时，可以使用相应的API来操纵和变换Tuple的流。一个Tuple是一个命名的值列表。Tuple可以包含任何类型的对象，还可通过序列化注册新类型。</li>
+<li>Storm只包含三个抽象类型：Spout、Bolt、Topology</li>
+</ul>
+</li>
+<li>可拓展<ul>
+<li>Storm的Topology是并行计算的，运行在一个集群主机上，可以对Topology的不同部分单独调整他们的并行扩展。</li>
+</ul>
+</li>
+<li>容错<ul>
+<li>当worker死亡，Storm会自动重新启动它们。如果一个节点死亡，worker将在另一个节点重新启动。</li>
+<li>Storm的守护进程Nimbus和Supervisor被设计为无状态和快速失败的，如果挂掉重启后像是什么都没发生过一样。</li>
+</ul>
+</li>
+<li>保证数据处理<ul>
+<li>通过跟踪Topology中的Tuple确保每一个Tuple都能被完全处理。</li>
+</ul>
+</li>
+<li>多语言支持<ul>
+<li>Storm的核心是一个定义和提交Topology的Thrift定义，所以可以使用任何语言定义。</li>
+<li>非jvm的Spout和Bolt可以通过一个基于JSON协议的stdin/stdout与Storm通信。</li>
+</ul>
+</li>
+<li>自由开源</li>
+<li>部署操作简单</li>
+</ol>
+<h2 id="4-Storm应用方向"><a href="#4-Storm应用方向" class="headerlink" title="4. Storm应用方向"></a>4. Storm应用方向</h2><ol>
+<li>流处理<ul>
+<li>处理源源不断流进来的消息，处理之后将结果写入到某个存储中去。</li>
+</ul>
+</li>
+<li>连续计算<ul>
+<li>Storm能保证计算可以永远运行，知道用户结束计算进程为止。</li>
+</ul>
+</li>
+<li>分布式RPC<ul>
+<li>由于Storm的处理组件是分布式的，而且处理延迟极低，所以可以作为通用的分布式RPC框架使用。</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/storm/" rel="tag">#storm</a>
+          
+            <a href="/tags/大数据/" rel="tag">#大数据</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/04/kafka-接口-一-生产者/" rel="next" title="kafka-接口(一)-生产者">
+                <i class="fa fa-chevron-left"></i> kafka-接口(一)-生产者
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/27/基于Spring-Boot-Spring-Security开发信息管理平台/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="<%= page.layout %>-<%= post.slug %>" data-title="<%= page.title %>" data-url="http://non-zero.space/<%= page.permalink %>"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="PG-shen" />
+          <p class="site-author-name" itemprop="name">PG-shen</p>
+          <p class="site-description motion-element" itemprop="description">PG-shen's Blog | java | linux</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Storm简介"><span class="nav-number">1.</span> <span class="nav-text">Storm简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-什么是Storm"><span class="nav-number">1.1.</span> <span class="nav-text">1. 什么是Storm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-Storm核心技术和基本组成"><span class="nav-number">1.2.</span> <span class="nav-text">2. Storm核心技术和基本组成</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Storm的特点"><span class="nav-number">1.3.</span> <span class="nav-text">3. Storm的特点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-Storm应用方向"><span class="nav-number">1.4.</span> <span class="nav-text">4. Storm应用方向</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PG-shen</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"non-zero"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("", "");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>

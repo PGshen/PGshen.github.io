@@ -1,0 +1,1017 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="大数据,kafka," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="kafka-开始(二)
+一、kafka 架构1.1 拓扑结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="kafka-开始(二)">
+<meta property="og:url" content="http://non-zero.space/2017/09/03/kafka-开始-二/index.html">
+<meta property="og:site_name" content="Non-zero">
+<meta property="og:description" content="kafka-开始(二)
+一、kafka 架构1.1 拓扑结构">
+<meta property="og:image" content="http://non-zero.space/images/kafka-topo.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-zookeeper.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-producer.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-broker-mag.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-topic-create.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-topic-delete.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-broker-failover.png">
+<meta property="og:image" content="http://non-zero.space/images/kafka-consumer-group.png">
+<meta property="og:updated_time" content="2018-03-27T02:21:49.457Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="kafka-开始(二)">
+<meta name="twitter:description" content="kafka-开始(二)
+一、kafka 架构1.1 拓扑结构">
+<meta name="twitter:image" content="http://non-zero.space/images/kafka-topo.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://non-zero.space/2017/09/03/kafka-开始-二/"/>
+
+  <title> kafka-开始(二) | Non-zero </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Non-zero</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Non-zero space</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                kafka-开始(二)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2017-09-03T18:00:55+08:00" content="2017-09-03">
+              2017-09-03
+            </time>
+          </span>
+
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/" itemprop="url" rel="index">
+                    <span itemprop="name">大数据</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/大数据/kafka/" itemprop="url" rel="index">
+                    <span itemprop="name">kafka</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2017/09/03/kafka-开始-二/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/09/03/kafka-开始-二/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2017/09/03/kafka-开始-二/" class="leancloud_visitors" data-flag-title="kafka-开始(二)">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="kafka-开始-二"><a href="#kafka-开始-二" class="headerlink" title="kafka-开始(二)"></a>kafka-开始(二)</h1><hr>
+<h2 id="一、kafka-架构"><a href="#一、kafka-架构" class="headerlink" title="一、kafka 架构"></a>一、kafka 架构</h2><h3 id="1-1-拓扑结构"><a href="#1-1-拓扑结构" class="headerlink" title="1.1 拓扑结构"></a>1.1 拓扑结构</h3><a id="more"></a>
+<p>如下图：<br><img src="/images/kafka-topo.png" alt="拓扑结构"></p>
+<h3 id="1-2-相关概念"><a href="#1-2-相关概念" class="headerlink" title="1.2 相关概念"></a>1.2 相关概念</h3><ol>
+<li><strong>producer</strong><br>消息生产者，发布消息到 kafka 集群的终端或服务。</li>
+<li><strong>broker</strong><br>kafka 集群中包含的服务器。</li>
+<li><strong>topic</strong><br>每条发布到 kafka 集群的消息属于的类别，即 kafka 是面向 topic 的。</li>
+<li><strong>partition</strong><br>partition 是物理上的概念，每个 topic 包含一个或多个 partition。kafka 分配的单位是 partition。</li>
+<li><strong>consumer</strong><br>从 kafka 集群中消费消息的终端或服务。</li>
+<li><strong>Consumer group</strong><br>high-level consumer API 中，每个 consumer 都属于一个 consumer group，每条消息只能被 consumer group 中的一个 Consumer 消费，但可以被多个 consumer group 消费。</li>
+<li><strong>replica</strong><br>partition 的副本，保障 partition 的高可用。</li>
+<li><strong>leader</strong><br>replica 中的一个角色， producer 和 consumer 只跟 leader 交互。</li>
+<li><strong>follower</strong><br>replica 中的一个角色，从 leader 中复制数据。</li>
+<li><strong>controller</strong><br>kafka 集群中的其中一个服务器，用来进行 leader election 以及 各种 failover。</li>
+<li><strong>zookeeper</strong><br>kafka 通过 zookeeper 来存储集群的 meta 信息。</li>
+</ol>
+<h3 id="1-3-zookeeper-节点"><a href="#1-3-zookeeper-节点" class="headerlink" title="1.3 zookeeper 节点"></a>1.3 zookeeper 节点</h3><p>kafka 在 zookeeper 中的存储结构如下图所示：<br><img src="/images/kafka-zookeeper.png" alt="kafka-zookeeper"></p>
+<h2 id="二、producer-发布消息"><a href="#二、producer-发布消息" class="headerlink" title="二、producer 发布消息"></a>二、producer 发布消息</h2><h3 id="2-1-写入方式"><a href="#2-1-写入方式" class="headerlink" title="2.1 写入方式"></a>2.1 写入方式</h3><p>producer 采用 push 模式将消息发布到 broker，每条消息都被 append 到 patition 中，属于顺序写磁盘（顺序写磁盘效率比随机写内存要高，保障 kafka 吞吐率）。</p>
+<h3 id="2-2-消息路由"><a href="#2-2-消息路由" class="headerlink" title="2.2 消息路由"></a>2.2 消息路由</h3><p>producer 发送消息到 broker 时，会根据分区算法选择将其存储到哪一个 partition。其路由机制为：</p>
+<blockquote>
+<ol>
+<li>指定了 patition，则直接使用；</li>
+<li>未指定 patition 但指定 key，通过对 key 的 value 进行hash 选出一个 patition</li>
+<li>patition 和 key 都未指定，使用轮询选出一个 patition。</li>
+</ol>
+</blockquote>
+<p>附上 java 客户端分区源码，一目了然：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//创建消息实例</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">ProducerRecord</span><span class="params">(String topic, Integer partition, Long timestamp, K key, V value)</span> </span>&#123;</div><div class="line">     <span class="keyword">if</span> (topic == <span class="keyword">null</span>)</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Topic cannot be null"</span>);</div><div class="line">     <span class="keyword">if</span> (timestamp != <span class="keyword">null</span> &amp;&amp; timestamp &lt; <span class="number">0</span>)</div><div class="line">          <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"Invalid timestamp "</span> + timestamp);</div><div class="line">     <span class="keyword">this</span>.topic = topic;</div><div class="line">     <span class="keyword">this</span>.partition = partition;</div><div class="line">     <span class="keyword">this</span>.key = key;</div><div class="line">     <span class="keyword">this</span>.value = value;</div><div class="line">     <span class="keyword">this</span>.timestamp = timestamp;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//计算 patition，如果指定了 patition 则直接使用，否则使用 key 计算</span></div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(ProducerRecord&lt;K, V&gt; record, <span class="keyword">byte</span>[] serializedKey , <span class="keyword">byte</span>[] serializedValue, Cluster cluster)</span> </span>&#123;</div><div class="line">     Integer partition = record.partition();</div><div class="line">     <span class="keyword">if</span> (partition != <span class="keyword">null</span>) &#123;</div><div class="line">          List&lt;PartitionInfo&gt; partitions = cluster.partitionsForTopic(record.topic());</div><div class="line">          <span class="keyword">int</span> lastPartition = partitions.size() - <span class="number">1</span>;</div><div class="line">          <span class="keyword">if</span> (partition &lt; <span class="number">0</span> || partition &gt; lastPartition) &#123;</div><div class="line">               <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(String.format(<span class="string">"Invalid partition given with record: %d is not in the range [0...%d]."</span>, partition, lastPartition));</div><div class="line">          &#125;</div><div class="line">          <span class="keyword">return</span> partition;</div><div class="line">     &#125;</div><div class="line">     <span class="keyword">return</span> <span class="keyword">this</span>.partitioner.partition(record.topic(), record.key(), serializedKey, record.value(), serializedValue, cluster);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// 使用 key 选取 patition</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">partition</span><span class="params">(String topic, Object key, <span class="keyword">byte</span>[] keyBytes, Object value, <span class="keyword">byte</span>[] valueBytes, Cluster cluster)</span> </span>&#123;</div><div class="line">     List&lt;PartitionInfo&gt; partitions = cluster.partitionsForTopic(topic);</div><div class="line">     <span class="keyword">int</span> numPartitions = partitions.size();</div><div class="line">     <span class="keyword">if</span> (keyBytes == <span class="keyword">null</span>) &#123;</div><div class="line">          <span class="keyword">int</span> nextValue = counter.getAndIncrement();</div><div class="line">          List&lt;PartitionInfo&gt; availablePartitions = cluster.availablePartitionsForTopic(topic);</div><div class="line">          <span class="keyword">if</span> (availablePartitions.size() &gt; <span class="number">0</span>) &#123;</div><div class="line">               <span class="keyword">int</span> part = DefaultPartitioner.toPositive(nextValue) % availablePartitions.size();</div><div class="line">               <span class="keyword">return</span> availablePartitions.get(part).partition();</div><div class="line">          &#125; <span class="keyword">else</span> &#123;</div><div class="line">               <span class="keyword">return</span> DefaultPartitioner.toPositive(nextValue) % numPartitions;</div><div class="line">          &#125;</div><div class="line">     &#125; <span class="keyword">else</span> &#123;</div><div class="line">          <span class="comment">//对 keyBytes 进行 hash 选出一个 patition</span></div><div class="line">          <span class="keyword">return</span> DefaultPartitioner.toPositive(Utils.murmur2(keyBytes)) % numPartitions;</div><div class="line">     &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="2-3-写入流程"><a href="#2-3-写入流程" class="headerlink" title="2.3 写入流程"></a>2.3 写入流程</h3><p> producer 写入消息序列图如下所示：<br><img src="/images/kafka-producer.png" alt="kafka-producer"></p>
+<p>流程说明：</p>
+<blockquote>
+<ol>
+<li>producer 先从 zookeeper 的 “/brokers/…/state” 节点找到该 partition 的 leader</li>
+<li>producer 将消息发送给该 leader</li>
+<li>leader 将消息写入本地 log</li>
+<li>followers 从 leader pull 消息，写入本地 log 后 leader 发送 ACK</li>
+<li>leader 收到所有 ISR 中的 replica 的 ACK 后，增加 HW（high watermark，最后 commit 的 offset） 并向 producer 发送 ACK</li>
+</ol>
+</blockquote>
+<h3 id="2-4-producer-delivery-guarantee"><a href="#2-4-producer-delivery-guarantee" class="headerlink" title="2.4 producer delivery guarantee"></a>2.4 producer delivery guarantee</h3><p> 一般情况下存在三种情况：</p>
+<blockquote>
+<ol>
+<li>At most once 消息可能会丢，但绝不会重复传输</li>
+<li>At least one 消息绝不会丢，但可能会重复传输</li>
+<li>Exactly once 每条消息肯定会被传输一次且仅传输一次</li>
+</ol>
+</blockquote>
+<p>当 producer 向 broker 发送消息时，一旦这条消息被 commit，由于 replication 的存在，它就不会丢。但是如果 producer 发送数据给 broker 后，遇到网络问题而造成通信中断，那 Producer 就无法判断该条消息是否已经 commit。虽然 Kafka 无法确定网络故障期间发生了什么，但是 producer 可以生成一种类似于主键的东西，发生故障时幂等性的重试多次，这样就做到了 Exactly once，但目前还并未实现。所以目前默认情况下一条消息从 producer 到 broker 是确保了 At least once，可通过设置 producer 异步发送实现At most once。</p>
+<h2 id="三、broker-保存消息"><a href="#三、broker-保存消息" class="headerlink" title="三、broker 保存消息"></a>三、broker 保存消息</h2><h3 id="3-1-存储方式"><a href="#3-1-存储方式" class="headerlink" title="3.1 存储方式"></a>3.1 存储方式</h3><p>物理上把 topic 分成一个或多个 patition（对应 server.properties 中的 num.partitions=3 配置），每个 patition 物理上对应一个文件夹（该文件夹存储该 patition 的所有消息和索引文件），如下：</p>
+<p><img src="/images/kafka-broker-mag.png" alt=""></p>
+<h3 id="3-2-存储策略"><a href="#3-2-存储策略" class="headerlink" title="3.2 存储策略"></a>3.2 存储策略</h3><p>无论消息是否被消费，kafka 都会保留所有消息。有两种策略可以删除旧数据：</p>
+<blockquote>
+<ol>
+<li>基于时间：log.retention.hours=168</li>
+<li>基于大小：log.retention.bytes=1073741824</li>
+</ol>
+</blockquote>
+<p>需要注意的是，因为Kafka读取特定消息的时间复杂度为O(1)，即与文件大小无关，所以这里删除过期文件与提高 Kafka 性能无关。</p>
+<h3 id="3-3-topic-创建与删除"><a href="#3-3-topic-创建与删除" class="headerlink" title="3.3 topic 创建与删除"></a>3.3 topic 创建与删除</h3><h4 id="3-3-1-创建-topic"><a href="#3-3-1-创建-topic" class="headerlink" title="3.3.1 创建 topic"></a>3.3.1 创建 topic</h4><p>创建 topic 的序列图如下所示：</p>
+<p><img src="/images/kafka-topic-create.png" alt=""></p>
+<p>流程说明：</p>
+<blockquote>
+<ol>
+<li>controller 在 ZooKeeper 的 /brokers/topics 节点上注册 watcher，当 topic 被创建，则 controller 会通过 watch 得到该 topic 的 partition/replica 分配。</li>
+<li>controller从 /brokers/ids 读取当前所有可用的 broker 列表，对于 set_p 中的每一个 partition：<br> 2.1 从分配给该 partition 的所有 replica（称为AR）中任选一个可用的 broker 作为新的 leader，并将AR设置为新的 ISR<br> 2.2 将新的 leader 和 ISR 写入 /brokers/topics/[topic]/partitions/[partition]/state</li>
+<li>controller 通过 RPC 向相关的 broker 发送 LeaderAndISRRequest。</li>
+</ol>
+</blockquote>
+<h4 id="3-3-2-删除-topic"><a href="#3-3-2-删除-topic" class="headerlink" title="3.3.2 删除 topic"></a>3.3.2 删除 topic</h4><p>删除 topic 的序列图如下所示：</p>
+<p><img src="/images/kafka-topic-delete.png" alt=""></p>
+<p>流程说明：</p>
+<blockquote>
+<ol>
+<li>controller 在 zooKeeper 的 /brokers/topics 节点上注册 watcher，当 topic 被删除，则 controller 会通过 watch 得到该 topic 的 partition/replica 分配。</li>
+<li>若 delete.topic.enable=false，结束；否则 controller 注册在 /admin/delete_topics 上的 watch 被 fire，controller 通过回调向对应的 broker 发送 StopReplicaRequest。</li>
+</ol>
+</blockquote>
+<h2 id="四、kafka-HA"><a href="#四、kafka-HA" class="headerlink" title="四、kafka HA"></a>四、kafka HA</h2><h3 id="4-1-replication"><a href="#4-1-replication" class="headerlink" title="4.1 replication"></a>4.1 replication</h3><p>如图.1所示，同一个 partition 可能会有多个 replica（对应 server.properties 配置中的 default.replication.factor=N）。没有 replica 的情况下，一旦 broker 宕机，其上所有 patition 的数据都不可被消费，同时 producer 也不能再将数据存于其上的 patition。引入replication 之后，同一个 partition 可能会有多个 replica，而这时需要在这些 replica 之间选出一个 leader，producer 和 consumer 只与这个 leader 交互，其它 replica 作为 follower 从 leader 中复制数据。</p>
+<p>Kafka 分配 Replica 的算法如下：</p>
+<blockquote>
+<ol>
+<li>将所有 broker（假设共 n 个 broker）和待分配的 partition 排序</li>
+<li>将第 i 个 partition 分配到第（i mod n）个 broker 上</li>
+<li>将第 i 个 partition 的第 j 个 replica 分配到第（(i + j) mode n）个 broker上</li>
+</ol>
+</blockquote>
+<h3 id="4-2-leader-failover"><a href="#4-2-leader-failover" class="headerlink" title="4.2 leader failover"></a>4.2 leader failover</h3><p>当 partition 对应的 leader 宕机时，需要从 follower 中选举出新 leader。在选举新leader时，一个基本的原则是，新的 leader 必须拥有旧 leader commit 过的所有消息。</p>
+<p>kafka 在 zookeeper 中（/brokers/…/state）动态维护了一个 ISR（in-sync replicas），由3.3节的写入流程可知 ISR 里面的所有 replica 都跟上了 leader，只有 ISR 里面的成员才能选为 leader。对于 f+1 个 replica，一个 partition 可以在容忍 f 个 replica 失效的情况下保证消息不丢失。</p>
+<p>当所有 replica 都不工作时，有两种可行的方案：</p>
+<blockquote>
+<ol>
+<li>等待 ISR 中的任一个 replica 活过来，并选它作为 leader。可保障数据不丢失，但时间可能相对较长。</li>
+<li>选择第一个活过来的 replica（不一定是 ISR 成员）作为 leader。无法保障数据不丢失，但相对不可用时间较短。<br>kafka 0.8.* 使用第二种方式。</li>
+</ol>
+</blockquote>
+<p>kafka 通过 Controller 来选举 leader，流程请参考5.3节。</p>
+<h3 id="4-3-broker-failover"><a href="#4-3-broker-failover" class="headerlink" title="4.3 broker failover"></a>4.3 broker failover</h3><p>kafka broker failover 序列图如下所示：</p>
+<p><img src="/images/kafka-broker-failover.png" alt=""></p>
+<p>流程说明： </p>
+<blockquote>
+<ol>
+<li>controller 在 zookeeper 的 /brokers/ids/[brokerId] 节点注册 Watcher，当 broker 宕机时 zookeeper 会 fire watch</li>
+<li>controller 从 /brokers/ids 节点读取可用broker</li>
+<li>controller决定set_p，该集合包含宕机 broker 上的所有 partition</li>
+<li>对 set_p 中的每一个 partition<br> 4.1 从/brokers/topics/[topic]/partitions/[partition]/state 节点读取 ISR<br> 4.2 决定新 leader（如4.3节所描述）<br> 4.3 将新 leader、ISR、controller_epoch 和 leader_epoch 等信息写入 state 节点</li>
+<li>通过 RPC 向相关 broker 发送 leaderAndISRRequest 命令</li>
+</ol>
+</blockquote>
+<h3 id="4-4-controller-failover"><a href="#4-4-controller-failover" class="headerlink" title="4.4 controller failover"></a>4.4 controller failover</h3><p> 当 controller 宕机时会触发 controller failover。每个 broker 都会在 zookeeper 的 “/controller” 节点注册 watcher，当 controller 宕机时 zookeeper 中的临时节点消失，所有存活的 broker 收到 fire 的通知，每个 broker 都尝试创建新的 controller path，只有一个竞选成功并当选为 controller。</p>
+<p>当新的 controller 当选时，会触发 KafkaController.onControllerFailover 方法，在该方法中完成如下操作：</p>
+<blockquote>
+<ol>
+<li>读取并增加 Controller Epoch。</li>
+<li>在 reassignedPartitions Patch(/admin/reassign_partitions) 上注册 watcher。</li>
+<li>在 preferredReplicaElection Path(/admin/preferred_replica_election) 上注册 watcher。</li>
+<li>通过 partitionStateMachine 在 broker Topics Patch(/brokers/topics) 上注册 watcher。</li>
+<li>若 delete.topic.enable=true（默认值是 false），则 partitionStateMachine 在 Delete Topic Patch(/admin/delete_topics) 上注册 watcher。</li>
+<li>通过 replicaStateMachine在 Broker Ids Patch(/brokers/ids)上注册Watch。</li>
+<li>初始化 ControllerContext 对象，设置当前所有 topic，“活”着的 broker 列表，所有 partition 的 leader 及 ISR等。</li>
+<li>启动 replicaStateMachine 和 partitionStateMachine。</li>
+<li>将 brokerState 状态设置为 RunningAsController。</li>
+<li>将每个 partition 的 Leadership 信息发送给所有“活”着的 broker。</li>
+<li>若 auto.leader.rebalance.enable=true（默认值是true），则启动 partition-rebalance 线程。</li>
+<li>若 delete.topic.enable=true 且Delete Topic Patch(/admin/delete_topics)中有值，则删除相应的Topic。</li>
+</ol>
+</blockquote>
+<h2 id="五-consumer-消费消息"><a href="#五-consumer-消费消息" class="headerlink" title="五. consumer 消费消息"></a>五. consumer 消费消息</h2><h3 id="5-1-consumer-API"><a href="#5-1-consumer-API" class="headerlink" title="5.1 consumer API"></a>5.1 consumer API</h3><p>kafka 提供了两套 consumer API：</p>
+<blockquote>
+<ol>
+<li>The high-level Consumer API</li>
+<li>The SimpleConsumer API<br>其中 high-level consumer API 提供了一个从 kafka 消费数据的高层抽象，而 SimpleConsumer API 则需要开发人员更多地关注细节。</li>
+</ol>
+</blockquote>
+<h4 id="5-1-1-The-high-level-consumer-API"><a href="#5-1-1-The-high-level-consumer-API" class="headerlink" title="5.1.1 The high-level consumer API"></a>5.1.1 The high-level consumer API</h4><p>high-level consumer API 提供了 consumer group 的语义，一个消息只能被 group 内的一个 consumer 所消费，且 consumer 消费消息时不关注 offset，最后一个 offset 由 zookeeper 保存。</p>
+<p>使用 high-level consumer API 可以是多线程的应用，应当注意：</p>
+<blockquote>
+<ol>
+<li>如果消费线程大于 patition 数量，则有些线程将收不到消息</li>
+<li>如果 patition 数量大于线程数，则有些线程多收到多个 patition 的消息</li>
+<li>如果一个线程消费多个 patition，则无法保证你收到的消息的顺序，而一个 patition 内的消息是有序的</li>
+</ol>
+</blockquote>
+<h4 id="5-1-2-The-SimpleConsumer-API"><a href="#5-1-2-The-SimpleConsumer-API" class="headerlink" title="5.1.2 The SimpleConsumer API"></a>5.1.2 The SimpleConsumer API</h4><p>如果你想要对 patition 有更多的控制权，那就应该使用 SimpleConsumer API，比如：</p>
+<blockquote>
+<ol>
+<li>多次读取一个消息</li>
+<li>只消费一个 patition 中的部分消息</li>
+<li>使用事务来保证一个消息仅被消费一次</li>
+</ol>
+</blockquote>
+<p> 但是使用此 API 时，partition、offset、broker、leader 等对你不再透明，需要自己去管理。你需要做大量的额外工作：</p>
+<blockquote>
+<ol>
+<li>必须在应用程序中跟踪 offset，从而确定下一条应该消费哪条消息</li>
+<li>应用程序需要通过程序获知每个 Partition 的 leader 是谁</li>
+<li>需要处理 leader 的变更</li>
+</ol>
+</blockquote>
+<p> 使用 SimpleConsumer API 的一般流程如下：</p>
+<blockquote>
+<ol>
+<li>查找到一个“活着”的 broker，并且找出每个 partition 的 leader</li>
+<li>找出每个 partition 的 follower</li>
+<li>定义好请求，该请求应该能描述应用程序需要哪些数据</li>
+<li>fetch 数据</li>
+<li>识别 leader 的变化，并对之作出必要的响应</li>
+</ol>
+</blockquote>
+<p><em>以下针对 high-level Consumer API 进行说明。</em></p>
+<h3 id="5-2-consumer-group"><a href="#5-2-consumer-group" class="headerlink" title="5.2 consumer group"></a>5.2 consumer group</h3><p>如 2.2 节所说， kafka 的分配单位是 patition。每个 consumer 都属于一个 group，一个 partition 只能被同一个 group 内的一个 consumer 所消费（也就保障了一个消息只能被 group 内的一个 consuemr 所消费），但是多个 group 可以同时消费这个 partition。</p>
+<p>kafka 的设计目标之一就是同时实现离线处理和实时处理，根据这一特性，可以使用 spark/Storm 这些实时处理系统对消息在线处理，同时使用 Hadoop 批处理系统进行离线处理，还可以将数据备份到另一个数据中心，只需要保证这三者属于不同的 consumer group。如下图所示：</p>
+<p><img src="/images/kafka-consumer-group.png" alt=""></p>
+<h3 id="5-3-消费方式"><a href="#5-3-消费方式" class="headerlink" title="5.3 消费方式"></a>5.3 消费方式</h3><p>consumer 采用 pull 模式从 broker 中读取数据。</p>
+<p>push 模式很难适应消费速率不同的消费者，因为消息发送速率是由 broker 决定的。它的目标是尽可能以最快速度传递消息，但是这样很容易造成 consumer 来不及处理消息，典型的表现就是拒绝服务以及网络拥塞。而 pull 模式则可以根据 consumer 的消费能力以适当的速率消费消息。</p>
+<p>对于 Kafka 而言，pull 模式更合适，它可简化 broker 的设计，consumer 可自主控制消费消息的速率，同时 consumer 可以自己控制消费方式——即可批量消费也可逐条消费，同时还能选择不同的提交方式从而实现不同的传输语义。</p>
+<h3 id="5-4-consumer-delivery-guarantee"><a href="#5-4-consumer-delivery-guarantee" class="headerlink" title="5.4 consumer delivery guarantee"></a>5.4 consumer delivery guarantee</h3><p>如果将 consumer 设置为 autocommit，consumer 一旦读到数据立即自动 commit。如果只讨论这一读取消息的过程，那 Kafka 确保了 Exactly once。</p>
+<p>但实际使用中应用程序并非在 consumer 读取完数据就结束了，而是要进行进一步处理，而数据处理与 commit 的顺序在很大程度上决定了consumer delivery guarantee：</p>
+<blockquote>
+<ol>
+<li>读完消息先 commit 再处理消息。<br> 这种模式下，如果 consumer 在 commit 后还没来得及处理消息就 crash 了，下次重新开始工作后就无法读到刚刚已提交而未处理的消息，这就对应于 At most once</li>
+<li>读完消息先处理再 commit。<br> 这种模式下，如果在处理完消息之后 commit 之前 consumer crash 了，下次重新开始工作时还会处理刚刚未 commit 的消息，实际上该消息已经被处理过了。这就对应于 At least once。</li>
+<li>如果一定要做到 Exactly once，就需要协调 offset 和实际操作的输出。<br> 精典的做法是引入两阶段提交。如果能让 offset 和操作输入存在同一个地方，会更简洁和通用。这种方式可能更好，因为许多输出系统可能不支持两阶段提交。比如，consumer 拿到数据后可能把数据放到 HDFS，如果把最新的 offset 和数据本身一起写到 HDFS，那就可以保证数据的输出和 offset 的更新要么都完成，要么都不完成，间接实现 Exactly once。（目前就 high-level API而言，offset 是存于Zookeeper 中的，无法存于HDFS，而SimpleConsuemr API的 offset 是由自己去维护的，可以将之存于 HDFS 中）</li>
+</ol>
+</blockquote>
+<p>总之，Kafka 默认保证 At least once，并且允许通过设置 producer 异步提交来实现 At most once（见文章《kafka consumer防止数据丢失》）。而 Exactly once 要求与外部存储系统协作，幸运的是 kafka 提供的 offset 可以非常直接非常容易得使用这种方式。</p>
+<p>更多关于 kafka 传输语义的信息请参考《Message Delivery Semantics》。</p>
+<h3 id="5-5-consumer-rebalance"><a href="#5-5-consumer-rebalance" class="headerlink" title="5.5 consumer rebalance"></a>5.5 consumer rebalance</h3><p>当有 consumer 加入或退出、以及 partition 的改变（如 broker 加入或退出）时会触发 rebalance。consumer rebalance算法如下：</p>
+<blockquote>
+<ol>
+<li>将目标 topic 下的所有 partirtion 排序，存于PT</li>
+<li>对某 consumer group 下所有 consumer 排序，存于 CG，第 i 个consumer 记为 Ci</li>
+<li>N=size(PT)/size(CG)，向上取整</li>
+<li>解除 Ci 对原来分配的 partition 的消费权（i从0开始）</li>
+<li>将第i<em>N到（i+1）</em>N-1个 partition 分配给 Ci</li>
+</ol>
+</blockquote>
+<p>在 0.8.*版本，每个 consumer 都只负责调整自己所消费的 partition，为了保证整个consumer group 的一致性，当一个 consumer 触发了 rebalance 时，该 consumer group 内的其它所有其它 consumer 也应该同时触发 rebalance。这会导致以下几个问题：</p>
+<blockquote>
+<p>1.Herd effect<br>　　任何 broker 或者 consumer 的增减都会触发所有的 consumer 的 rebalance<br>2.Split Brain<br>　　每个 consumer 分别单独通过 zookeeper 判断哪些 broker 和 consumer 宕机了，那么不同 consumer 在同一时刻从 zookeeper 看到的 view 就可能不一样，这是由 zookeeper的特性决定的，这就会造成不正确的 reblance 尝试。<br>3.调整结果不可控<br>　　所有的 consumer 都并不知道其它 consumer 的 rebalance 是否成功，这可能会导致 kafka 工作在一个不正确的状态。</p>
+</blockquote>
+<p>基于以上问题，kafka 设计者考虑在0.9.*版本开始使用中心 coordinator 来控制 consumer rebalance，然后又从简便性和验证要求两方面考虑，计划在 consumer 客户端实现分配方案。（见文章《Kafka Detailed Consumer Coordinator Design》和《Kafka Client-side Assignment Proposal》），此处不再赘述。</p>
+<h2 id="六、注意事项"><a href="#六、注意事项" class="headerlink" title="六、注意事项"></a>六、注意事项</h2><h3 id="6-1-producer-无法发送消息的问题"><a href="#6-1-producer-无法发送消息的问题" class="headerlink" title="6.1 producer 无法发送消息的问题"></a>6.1 producer 无法发送消息的问题</h3><p>最开始在本机搭建了kafka伪集群，本地 producer 客户端成功发布消息至 broker。随后在服务器上搭建了 kafka 集群，在本机连接该集群，producer 却无法发布消息到 broker（奇怪也没有抛错）。最开始怀疑是 iptables 没开放，于是开放端口，结果还不行（又开始是代码问题、版本问题等等，倒腾了很久）。最后没办法，一项一项查看 server.properties 配置，发现以下两个配置：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"># The address the socket server listens on. It will get the value returned from </div><div class="line"># java.net.InetAddress.getCanonicalHostName() if not configured.</div><div class="line">#   FORMAT:</div><div class="line">#     listeners = security_protocol://host_name:port</div><div class="line">#   EXAMPLE:</div><div class="line">#     listeners = PLAINTEXT://your.host.name:9092</div><div class="line">listeners=PLAINTEXT://:9092</div><div class="line"></div><div class="line">　# Hostname and port the broker will advertise to producers and consumers. If not set, </div><div class="line">　# it uses the value for "listeners" if configured. Otherwise, it will use the value</div><div class="line">　# returned from java.net.InetAddress.getCanonicalHostName().</div><div class="line">　#advertised.listeners=PLAINTEXT://your.host.name:9092</div></pre></td></tr></table></figure>
+<p>以上说的就是 advertised.listeners 是 broker 给 producer 和 consumer 连接使用的，如果没有设置，就使用 listeners，而如果 host_name 没有设置的话，就使用 java.net.InetAddress.getCanonicalHostName() 方法返回的主机名。</p>
+<p>修改方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">1. listeners=PLAINTEXT://121.10.26.XXX:9092</div><div class="line">2. advertised.listeners=PLAINTEXT://121.10.26.XXX:9092</div></pre></td></tr></table></figure>
+<p>修改后重启服务，正常工作。关于更多 kafka 配置说明，见文章《Kafka学习整理三(borker(0.9.0及0.10.0)配置)》。</p>
+<h2 id="七、参考文章"><a href="#七、参考文章" class="headerlink" title="七、参考文章"></a>七、参考文章</h2><ol>
+<li>《Kafka剖析（一）：Kafka背景及架构介绍》</li>
+<li>《Kafka设计解析（二）：Kafka High Availability （上）》</li>
+<li>《Kafka设计解析（二）：Kafka High Availability （下）》</li>
+<li>《Kafka设计解析（四）：Kafka Consumer解析》</li>
+<li>《Kafka设计解析（五）：Kafka Benchmark》</li>
+<li>《Kafka学习整理三(borker(0.9.0及0.10.0)配置)》</li>
+<li>《Using the High Level Consumer》</li>
+<li>《Using SimpleConsumer》</li>
+<li>《Consumer Client Re-Design》</li>
+<li>《Message Delivery Semantics》</li>
+<li>《Kafka Detailed Consumer Coordinator Design》</li>
+<li>《Kafka Client-side Assignment Proposal》</li>
+<li>《Kafka和DistributedLog技术对比》</li>
+<li>《kafka安装和启动》</li>
+<li>《kafka consumer防止数据丢失》</li>
+</ol>
+<blockquote>
+<p>作者：cyfonly<br>出处：<a href="http://www.cnblogs.com/cyfonly/" target="_blank" rel="external">http://www.cnblogs.com/cyfonly/</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/大数据/" rel="tag">#大数据</a>
+          
+            <a href="/tags/kafka/" rel="tag">#kafka</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/03/kafka-开始-一/" rel="next" title="kafka-开始(一)">
+                <i class="fa fa-chevron-left"></i> kafka-开始(一)
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/04/kafka-接口-一-生产者/" rel="prev" title="kafka-接口(一)-生产者">
+                kafka-接口(一)-生产者 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="<%= page.layout %>-<%= post.slug %>" data-title="<%= page.title %>" data-url="http://non-zero.space/<%= page.permalink %>"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="PG-shen" />
+          <p class="site-author-name" itemprop="name">PG-shen</p>
+          <p class="site-description motion-element" itemprop="description">PG-shen's Blog | java | linux</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">14</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#kafka-开始-二"><span class="nav-number">1.</span> <span class="nav-text">kafka-开始(二)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、kafka-架构"><span class="nav-number">1.1.</span> <span class="nav-text">一、kafka 架构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-拓扑结构"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 拓扑结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-相关概念"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 相关概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-zookeeper-节点"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 zookeeper 节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、producer-发布消息"><span class="nav-number">1.2.</span> <span class="nav-text">二、producer 发布消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-写入方式"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1 写入方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-消息路由"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2 消息路由</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-写入流程"><span class="nav-number">1.2.3.</span> <span class="nav-text">2.3 写入流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-producer-delivery-guarantee"><span class="nav-number">1.2.4.</span> <span class="nav-text">2.4 producer delivery guarantee</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、broker-保存消息"><span class="nav-number">1.3.</span> <span class="nav-text">三、broker 保存消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-存储方式"><span class="nav-number">1.3.1.</span> <span class="nav-text">3.1 存储方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-存储策略"><span class="nav-number">1.3.2.</span> <span class="nav-text">3.2 存储策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-topic-创建与删除"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.3 topic 创建与删除</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-1-创建-topic"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">3.3.1 创建 topic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-2-删除-topic"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">3.3.2 删除 topic</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、kafka-HA"><span class="nav-number">1.4.</span> <span class="nav-text">四、kafka HA</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-replication"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 replication</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-leader-failover"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 leader failover</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-broker-failover"><span class="nav-number">1.4.3.</span> <span class="nav-text">4.3 broker failover</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-controller-failover"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.4 controller failover</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五-consumer-消费消息"><span class="nav-number">1.5.</span> <span class="nav-text">五. consumer 消费消息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-consumer-API"><span class="nav-number">1.5.1.</span> <span class="nav-text">5.1 consumer API</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-1-The-high-level-consumer-API"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">5.1.1 The high-level consumer API</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1-2-The-SimpleConsumer-API"><span class="nav-number">1.5.1.2.</span> <span class="nav-text">5.1.2 The SimpleConsumer API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-consumer-group"><span class="nav-number">1.5.2.</span> <span class="nav-text">5.2 consumer group</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-消费方式"><span class="nav-number">1.5.3.</span> <span class="nav-text">5.3 消费方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-consumer-delivery-guarantee"><span class="nav-number">1.5.4.</span> <span class="nav-text">5.4 consumer delivery guarantee</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-consumer-rebalance"><span class="nav-number">1.5.5.</span> <span class="nav-text">5.5 consumer rebalance</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#六、注意事项"><span class="nav-number">1.6.</span> <span class="nav-text">六、注意事项</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-producer-无法发送消息的问题"><span class="nav-number">1.6.1.</span> <span class="nav-text">6.1 producer 无法发送消息的问题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#七、参考文章"><span class="nav-number">1.7.</span> <span class="nav-text">七、参考文章</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">PG-shen</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"non-zero"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("", "");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+</body>
+</html>
