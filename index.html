@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2018/03/27/基于Spring-Boot-Spring-Security开发信息管理平台/" itemprop="url">
-                  未命名
+                <a class="post-title-link" href="/2018/03/18/基于Spring-Boot-Spring-Security开发信息管理平台/" itemprop="url">
+                  基于Spring Boot + Spring Security开发信息管理平台
                 </a>
               
             
@@ -272,19 +272,38 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2018-03-27T10:54:06+08:00" content="2018-03-27">
-              2018-03-27
+            <time itemprop="dateCreated" datetime="2018-03-18T12:06:59+08:00" content="2018-03-18">
+              2018-03-18
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/Spring-Boot/" itemprop="url" rel="index">
+                    <span itemprop="name">Spring Boot</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2018/03/27/基于Spring-Boot-Spring-Security开发信息管理平台/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/27/基于Spring-Boot-Spring-Security开发信息管理平台/" itemprop="commentsCount"></span>
+                <a href="/2018/03/18/基于Spring-Boot-Spring-Security开发信息管理平台/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/03/18/基于Spring-Boot-Spring-Security开发信息管理平台/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -294,7 +313,7 @@
 
           
           
-             <span id="/2018/03/27/基于Spring-Boot-Spring-Security开发信息管理平台/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2018/03/18/基于Spring-Boot-Spring-Security开发信息管理平台/" class="leancloud_visitors" data-flag-title="基于Spring Boot + Spring Security开发信息管理平台">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -317,93 +336,13 @@
 
       
         
-          
-            <h1 id="基于Spring-Boot-Spring-Security开发信息管理平台"><a href="#基于Spring-Boot-Spring-Security开发信息管理平台" class="headerlink" title="基于Spring Boot + Spring Security开发信息管理平台"></a>基于Spring Boot + Spring Security开发信息管理平台</h1><h2 id="一-项目简介"><a href="#一-项目简介" class="headerlink" title="一. 项目简介"></a>一. 项目简介</h2><h3 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h3><p>&ensp;&ensp;&ensp;&ensp;本项目采用<strong>Restful API</strong> 设计,即前后端分离,这也是当前比较流行的做法,在项目开发过程中,事先约定好API接口以及对应数据格式,使前后端之间可以最大限度减少对方的”依赖”,提高开发效率.<br>&ensp;&ensp;&ensp;&ensp;后端是基于<strong>Spring Boot</strong>框架搭建的信息管理系统,并整合<strong>Spring Security</strong>进行授权认证管理,数据访问层则采用<strong>Mybatis</strong>进行持久化,该项目使用<strong>maven</strong>进行项目工程管理.项目提供了信息管理平台最基本的用户管理以及动态菜单管理等功能.<br>&ensp;&ensp;&ensp;&ensp;前端方面采用的<strong>vue.js</strong> + <strong>Element UI</strong>框架,由于本人主要做后端开发,在前端方面能力较渣,所以前端直接使用了由<a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank" rel="external">花裤衩</a>开发的模板,在此基础上结合自己项目的业务进行修改,这位大大还写了一个非常详细的<a href="https://panjiachen.github.io/vue-element-admin-site/#/" target="_blank" rel="external">文档</a>,非常值得学习.</p>
-<h3 id="2-项目截图"><a href="#2-项目截图" class="headerlink" title="2. 项目截图"></a>2. 项目截图</h3><ul>
-<li>首页<img src="/images/dashboard.png" alt="首页面板"></li>
-<li>用户管理<img src="/images/user.png" alt="用户管理"></li>
-<li>角色授权<img src="/images/auth.png" alt="角色授权"></li>
-<li>菜单管理<img src="/images/menu.png" alt="菜单管理"><h2 id="二-环境"><a href="#二-环境" class="headerlink" title="二. 环境"></a>二. 环境</h2>###1. 开发工具</li>
-<li>操作系统: Deepin</li>
-<li>IDE: IntelliJ IDEA 、WebStorm<blockquote>
-<p><strong>Deepin</strong> 深度操作系统是基于Ubuntu开发一款国产Linux操作系统,底层是Linux系统,同时基于DeepinWine技术，可以运行大量的Windows平台软件,像微信、QQ、TIM等都可以运行,这是其他Linux操作系统所没有的,界面也非常好看,用起来还是很顺心的,本项目是在Deepin系统上开发的.<br><strong>IntelliJ IDEA</strong> 个人觉得比eclipse好用,比较坑的是这东西很占内存<br><strong>Web Storm </strong>是IntelliJ全家桶中前端开发的IDE,也很好用,也很占内存</p>
-</blockquote>
-</li>
-</ul>
-<p>###2. 开发环境</p>
-<ul>
-<li>Java 1.8</li>
-<li>Mysql 5.7</li>
-<li>maven 3.3.9</li>
-<li>node.js 8.9.4</li>
-<li>redis 4.0.6<blockquote>
-<p>环境安装这里就不说了,具体网上有很多博客可参考</p>
-<h2 id="三-跑起来"><a href="#三-跑起来" class="headerlink" title="三. 跑起来"></a>三. 跑起来</h2><h3 id="1-后端"><a href="#1-后端" class="headerlink" title="1. 后端"></a>1. 后端</h3><h4 id="1-1-克隆项目"><a href="#1-1-克隆项目" class="headerlink" title="1.1 克隆项目"></a>1.1 克隆项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone git@github.com:PGshen/non-zero.git</div></pre></td></tr></table></figure>
-</blockquote>
-</li>
-</ul>
-<h4 id="1-2-Project-Structure配置"><a href="#1-2-Project-Structure配置" class="headerlink" title="1.2 Project Structure配置"></a>1.2 Project Structure配置</h4><ul>
-<li>用IDEA打开刚刚克隆下来的项目,右下角应该会提示<code>pom.xml file found</code>,点击<code>Add as Maven Project</code>,使项目使用maven进行管理,第一次需要下载相关依赖,时间会比较长.(第一次在IDEA上使用maven应该要配置一下,具体网上搜索吧)</li>
-<li><img src="/images/1.png" alt="idea打开"></li>
-<li>打开 File -&gt; Project Structure</li>
-<li>左侧选择<code>Project</code>,右侧选择项目的JDK,本项目使用的是1.8版本</li>
-<li><img src="/images/2.png" alt="Project"></li>
-<li><img src="/images/3.png" alt="Module"></li>
-<li><img src="/images/4.png" alt="Libraries"></li>
-<li><img src="/images/5.png" alt="Facetes"></li>
-<li>左侧选择<code>Artifacts</code>, 点击中间绿色<code>+</code>,选择<code>Web Application: exploded</code> -&gt; <code>From modules..</code>,在弹出面板中选择<code>zero-business</code>,然后<code>OK</code></li>
-<li>再次点击中间绿色<code>+</code>, 选择<code>Web Application:Archive</code> -&gt; <code>For zero-business:war exploded</code></li>
-<li><img src="/images/6.png" alt="Artifacts"></li>
-<li>Project Structure配置完成,点击<code>OK</code></li>
-</ul>
-<h4 id="1-3-Run-Debug-Configurations"><a href="#1-3-Run-Debug-Configurations" class="headerlink" title="1.3 Run/Debug Configurations"></a>1.3 Run/Debug Configurations</h4><ul>
-<li>打开 Run -&gt; Edit Configurations</li>
-<li>点击绿色<code>+</code> , 选择<code>Spring Boot</code>,配置一下<br> Name -&gt; <code>ZeroApplication</code><br> Main class -&gt; <code>space.zero.business.ZeroApplication</code><br> use class of module -&gt; <code>zero-business</code><br> JRE -&gt; <code>1.8</code></li>
-<li><img src="/images/7.png" alt="图片描述"></li>
-<li>Run/Debug Configurations配置完成,点击<code>OK</code><blockquote>
-<p>这里直接使用Spring Boot 内嵌的tomcat,只需在pom文件添加相关依赖即可;若是想部署到tomcat服务器也是可以的.</p>
-</blockquote>
-</li>
-</ul>
-<h4 id="1-4-数据库"><a href="#1-4-数据库" class="headerlink" title="1.4 数据库"></a>1.4 数据库</h4><ul>
-<li><p>创建数据库</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">create</span> <span class="keyword">database</span> zero <span class="built_in">character</span> <span class="keyword">set</span> utf8;</div></pre></td></tr></table></figure>
-</li>
-<li><p>导入数据</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">use</span> zero;</div><div class="line">source zero.sql;</div></pre></td></tr></table></figure>
-</li>
-<li><p>修改项目中的数据源配置(<code>zero-business</code>模块下的<code>application-dev.properties</code>文件)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 开发环境配置</div><div class="line"># 数据源配置，请修改为你项目的实际配置</div><div class="line">spring.datasource.url=jdbc:mysql://localhost:3306/zero?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false</div><div class="line">spring.datasource.username=root</div><div class="line">spring.datasource.password=1108</div><div class="line">spring.datasource.driver-class-name=com.mysql.jdbc.Driver</div><div class="line"></div><div class="line">server.port=8088</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="1-4-启动redis"><a href="#1-4-启动redis" class="headerlink" title="1.4 启动redis"></a>1.4 启动redis</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#在终端命令启动redis</span></div><div class="line">redis-server</div></pre></td></tr></table></figure>
-<h4 id="1-5-启动后端项目"><a href="#1-5-启动后端项目" class="headerlink" title="1.5 启动后端项目"></a>1.5 启动后端项目</h4><p>有两种方式启动项目,直接在IntelliJ IDEA 中启动,或者打成Jar包启动</p>
-<ul>
-<li><strong>IntelliJ IDEA启动</strong><br>通过前面的配置,直接点击run或debug按钮启动</li>
-<li><p><strong>Jar包启动</strong><br>进入项目目录,使用maven 命令打包</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mvn package</div></pre></td></tr></table></figure>
-<p>进入zero-business模块的target 目录可以看到刚刚打的Jar 包,使用Java命令启动</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -jar zero-business-1.0-SNAPSHOT.jar</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>如果在开发过程中使用IntelliJ IDEA启动,方便调试;<br>若是临时部署到远程服务器则采用Jar包运行方式;</p>
-</blockquote>
-<h3 id="2-前端"><a href="#2-前端" class="headerlink" title="2. 前端"></a>2. 前端</h3><h4 id="2-1-克隆项目"><a href="#2-1-克隆项目" class="headerlink" title="2.1 克隆项目"></a>2.1 克隆项目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone git@github.com:PGshen/non-zero-admin.git</div></pre></td></tr></table></figure>
-<h4 id="2-2-安装依赖"><a href="#2-2-安装依赖" class="headerlink" title="2.2 安装依赖"></a>2.2 安装依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#进入项目目录</div><div class="line">npm intall</div></pre></td></tr></table></figure>
-<h4 id="2-3-启动开发"><a href="#2-3-启动开发" class="headerlink" title="2.3 启动开发"></a>2.3 启动开发</h4><p>打开config目录下的dev.ent.js文件,配置访问的服务器地址和端口<br><figure class="highlight js"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">	<span class="attr">NODE_ENV</span>: <span class="string">'"development"'</span>,</div><div class="line">	<span class="attr">ENV_CONFIG</span>: <span class="string">'"dev"'</span>,</div><div class="line">	<span class="comment">// BASE_API: '"http://119.29.245.181:8088"'</span></div><div class="line">	BASE_API: <span class="string">'"http://127.0.0.1:8088"'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>启动<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm run dev</div></pre></td></tr></table></figure></p>
-<p>默认9527端口,浏览器打开<code>localhost:9527</code></p>
-<blockquote>
-<p>有问题或者下载依赖很慢可以参考<a href="https://github.com/PanJiaChen/vue-element-admin" target="_blank" rel="external">花裤衩</a>的说明</p>
-<p><strong>项目地址</strong></p>
-<blockquote>
-<p>后端:<a href="https://github.com/PGshen/non-zero" target="_blank" rel="external">https://github.com/PGshen/non-zero</a><br>前端:<a href="https://github.com/PGshen/non-zero-admin" target="_blank" rel="external">https://github.com/PGshen/non-zero-admin</a><br>预览地址:<a href="http://non-zero.space/zero/">http://non-zero.space/zero/</a> (临时挂在github pages上的,不要改基础数据)</p>
-<p>注意:项目还有一些小bug没改,目前先这样子吧</p>
-</blockquote>
-</blockquote>
-
-          
+          <h1 id="基于Spring-Boot-Spring-Security开发信息管理平台"><a href="#基于Spring-Boot-Spring-Security开发信息管理平台" class="headerlink" title="基于Spring Boot + Spring Security开发信息管理平台"></a>基于Spring Boot + Spring Security开发信息管理平台</h1><hr>
+<h2 id="一-项目简介"><a href="#一-项目简介" class="headerlink" title="一. 项目简介"></a>一. 项目简介</h2><h3 id="1-项目简介"><a href="#1-项目简介" class="headerlink" title="1. 项目简介"></a>1. 项目简介</h3><p>&ensp;&ensp;&ensp;&ensp;本项目采用<strong>Restful API</strong> 设计,即前后端分离,这也是当前比较流行的做法,在项目开发过程中,事先约定好API接口以及对应数据格式,使前后端之间可以最大限度减少对方的”依赖”,提高开发效率.<br>&ensp;&ensp;&ensp;&ensp;后端是基于<strong>Spring Boot</strong>框架搭建的信息管理系统,并整合<strong>Spring Security</strong>进行授权认证管理,数据访问层则采用<strong>Mybatis</strong>进行持久化,该项目使用<strong>maven</strong>进行项目工程管理.项目提供了信息管理平台最基本的用户管理以及动态菜单管理等功能.<br>&ensp;&ensp;&ensp;&ensp;前端方面采用的<strong>vue.js</strong> + <strong>Element UI</strong>框架,由于本人主要做后端开发,在前端方面能力较渣,所以前端直接使用了由<a href="https://github.com/PanJiaChen/vue-element-admin">花裤衩</a>开发的模板,在此基础上结合自己项目的业务进行修改,这位大大还写了一个非常详细的<a href="https://panjiachen.github.io/vue-element-admin-site/#/">文档</a>,非常值得学习.</p>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2018/03/18/基于Spring-Boot-Spring-Security开发信息管理平台/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1069,7 +1008,7 @@
           
             <div class="site-state-item site-state-categories">
               <a href="/categories">
-                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1078,7 +1017,7 @@
           
             <div class="site-state-item site-state-tags">
               <a href="/tags">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">17</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
